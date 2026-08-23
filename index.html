@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kotak Bank — Collections Dashboard</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+</head>
+<body>
+
+  <!-- ─── SIDEBAR ──────────────────────────────────────────────────── -->
+  <aside class="sidebar">
+
+    <!-- Logo -->
+    <div class="sidebar-logo">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 190 52" height="42" aria-label="Kotak Mahindra Bank">
+        <!-- Emblem: white circle -->
+        <circle cx="26" cy="26" r="24" fill="white" opacity="0.95"/>
+        <!-- Left C arc (Kotak blue) -->
+        <path d="M26 8 C14.5 8 5 15.8 5 26 C5 36.2 14.5 44 26 44"
+              fill="none" stroke="#004C97" stroke-width="5.5" stroke-linecap="round"/>
+        <!-- Right C arc (Kotak blue, mirrored) -->
+        <path d="M26 8 C37.5 8 47 15.8 47 26 C47 36.2 37.5 44 26 44"
+              fill="none" stroke="#004C97" stroke-width="5.5" stroke-linecap="round"/>
+        <!-- Red vertical bar -->
+        <rect x="23" y="7" width="6" height="38" rx="3" fill="#ED1C24"/>
+        <!-- "kotak" wordmark in white -->
+        <text x="58" y="36" font-family="'Arial Black', Arial, sans-serif"
+              font-weight="900" font-size="24" fill="white" letter-spacing="-0.5">kotak</text>
+      </svg>
+    </div>
+
+    <p class="sidebar-section-label">Navigation</p>
+
+    <!-- Nav items -->
+    <nav class="sidebar-nav">
+      <a class="nav-item" id="nav-dashboard" onclick="showView('dashboard')" href="#dashboard">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+          <rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>
+        </svg>
+        <span>Dashboard</span>
+      </a>
+      <a class="nav-item" id="nav-customers" onclick="showView('customers')" href="#customers">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+          <circle cx="9" cy="7" r="4"/>
+          <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+          <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+        </svg>
+        <span>Customers</span>
+      </a>
+    </nav>
+
+    <!-- User footer -->
+    <div class="sidebar-footer">
+      <div class="sidebar-footer-avatar">AM</div>
+      <div class="sidebar-footer-info">
+        <div class="sidebar-footer-name">Aman Sathe</div>
+        <div class="sidebar-footer-role">Collections Manager</div>
+      </div>
+    </div>
+
+  </aside>
+
+  <!-- ─── MAIN ──────────────────────────────────────────────────────── -->
+  <main class="main">
+
+    <!-- Top bar -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <div class="topbar-title" id="topbar-title">Collections Dashboard</div>
+        <div class="topbar-subtitle" id="topbar-subtitle">Overview of collection performance across all DPD buckets</div>
+      </div>
+      <div class="topbar-right">
+        <div class="topbar-date">Aug 23, 2026</div>
+        <div class="topbar-badge" title="Notifications">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+            <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+          </svg>
+        </div>
+      </div>
+    </header>
+
+    <!-- Content -->
+    <div class="content">
+
+      <!-- ── DASHBOARD VIEW ──────────────────────────────────────────── -->
+      <section class="view" id="dashboard-view">
+
+        <div class="page-header">
+          <div>
+            <div class="page-header-title">August 2026 — Collections Overview</div>
+            <div class="page-header-sub">Data as of 23 Aug 2026 · Refreshed daily</div>
+          </div>
+          <div style="display:flex;gap:8px;">
+            <div style="padding:6px 14px;background:white;border:1px solid var(--border);border-radius:6px;font-size:12px;color:var(--text-secondary);display:flex;align-items:center;gap:6px;">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              Aug 2026
+            </div>
+          </div>
+        </div>
+
+        <!-- KPI Cards -->
+        <div class="kpi-grid" id="kpi-grid"></div>
+
+        <!-- DPD Buckets -->
+        <div style="margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;">
+          <div style="font-size:14px;font-weight:700;color:var(--text-primary)">DPD Bucket Breakdown</div>
+          <div style="font-size:12px;color:var(--text-muted)">Slippage risk = probability of further DPD deterioration this month</div>
+        </div>
+        <div class="dpd-grid" id="dpd-grid"></div>
+
+        <!-- Charts -->
+        <div class="charts-grid">
+
+          <!-- Monthly Collections Chart -->
+          <div class="card chart-card">
+            <div class="chart-card-header">
+              <div>
+                <div class="chart-card-title">Monthly Collections by DPD Bucket</div>
+                <div class="chart-card-sub">Accounts resolved per month · Jan–Aug 2026</div>
+              </div>
+              <div class="chart-legend">
+                <div class="legend-item"><div class="legend-dot" style="background:#16A34A"></div>0–30</div>
+                <div class="legend-item"><div class="legend-dot" style="background:#D97706"></div>30–60</div>
+                <div class="legend-item"><div class="legend-dot" style="background:#EA580C"></div>60–90</div>
+                <div class="legend-item"><div class="legend-dot" style="background:#DC2626"></div>90+</div>
+              </div>
+            </div>
+            <div class="chart-wrap">
+              <canvas id="monthly-chart"></canvas>
+            </div>
+          </div>
+
+          <!-- Slippage Trend Chart -->
+          <div class="card chart-card">
+            <div class="chart-card-header">
+              <div>
+                <div class="chart-card-title">Slippage Risk Trend</div>
+                <div class="chart-card-sub">% probability per bucket · Jan–Aug 2026</div>
+              </div>
+            </div>
+            <div class="chart-legend" style="margin-bottom:16px;">
+              <div class="legend-item"><div class="legend-dot" style="background:#16A34A;border-radius:50%"></div>0–30 DPD</div>
+              <div class="legend-item"><div class="legend-dot" style="background:#D97706;border-radius:50%"></div>30–60</div>
+              <div class="legend-item"><div class="legend-dot" style="background:#EA580C;border-radius:50%"></div>60–90</div>
+              <div class="legend-item"><div class="legend-dot" style="background:#DC2626;border-radius:50%"></div>90+</div>
+            </div>
+            <div class="chart-wrap">
+              <canvas id="slippage-chart"></canvas>
+            </div>
+          </div>
+
+        </div><!-- /charts-grid -->
+
+      </section><!-- /dashboard-view -->
+
+      <!-- ── CUSTOMERS VIEW ──────────────────────────────────────────── -->
+      <section class="view" id="customers-view">
+
+        <div class="page-header">
+          <div>
+            <div class="page-header-title">Customer Portfolio</div>
+            <div class="page-header-sub">PTP intent scores and propensity ratings · Aug 2026</div>
+          </div>
+        </div>
+
+        <!-- Toolbar -->
+        <div class="customers-toolbar">
+          <div class="search-wrap">
+            <span class="search-icon">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+              </svg>
+            </span>
+            <input type="text" id="customer-search" placeholder="Search by name, loan ID, or phone…" autocomplete="off" />
+          </div>
+
+          <button class="filter-btn" id="filter-btn" onclick="toggleFilterPanel()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="4" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="11" y1="18" x2="13" y2="18"/>
+            </svg>
+            Filters
+            <span class="filter-count" id="filter-count">0</span>
+          </button>
+
+          <!-- Filter panel -->
+          <div class="filter-panel" id="filter-panel">
+            <div class="filter-panel-header">
+              <span class="filter-panel-title">Filter Customers</span>
+              <button class="filter-panel-clear" onclick="resetFilters()">Clear all</button>
+            </div>
+            <div class="filter-panel-body">
+
+              <div class="filter-group">
+                <div class="filter-group-title">DPD Bucket</div>
+                <div class="filter-chips">
+                  <div class="filter-chip" onclick="toggleChip(this,'dpd','0-30')">0–30 DPD</div>
+                  <div class="filter-chip" onclick="toggleChip(this,'dpd','30-60')">30–60 DPD</div>
+                  <div class="filter-chip" onclick="toggleChip(this,'dpd','60-90')">60–90 DPD</div>
+                  <div class="filter-chip" onclick="toggleChip(this,'dpd','90+')">90+ DPD</div>
+                </div>
+              </div>
+
+              <div class="filter-group">
+                <div class="filter-group-title">Propensity Score</div>
+                <div class="filter-chips">
+                  <div class="filter-chip" onclick="toggleChip(this,'propensity','Green')" style="border-color:#86EFAC">🟢 Green</div>
+                  <div class="filter-chip" onclick="toggleChip(this,'propensity','Amber')" style="border-color:#FCD34D">🟡 Amber</div>
+                  <div class="filter-chip" onclick="toggleChip(this,'propensity','Red')" style="border-color:#FCA5A5">🔴 Red</div>
+                </div>
+              </div>
+
+              <div class="filter-group">
+                <div class="filter-group-title">PTP Status</div>
+                <div class="filter-chips">
+                  <div class="filter-chip" onclick="toggleChip(this,'ptp','PTP Given')">PTP Given</div>
+                  <div class="filter-chip" onclick="toggleChip(this,'ptp','No PTP')">No PTP</div>
+                  <div class="filter-chip" onclick="toggleChip(this,'ptp','Broken PTP')">Broken PTP</div>
+                </div>
+              </div>
+
+              <div class="filter-group">
+                <div class="filter-group-title">Loan Type</div>
+                <div class="filter-chips">
+                  <div class="filter-chip" onclick="toggleChip(this,'loanType','Personal Loan')">Personal Loan</div>
+                  <div class="filter-chip" onclick="toggleChip(this,'loanType','Home Loan')">Home Loan</div>
+                  <div class="filter-chip" onclick="toggleChip(this,'loanType','Auto Loan')">Auto Loan</div>
+                  <div class="filter-chip" onclick="toggleChip(this,'loanType','Credit Card')">Credit Card</div>
+                </div>
+              </div>
+
+            </div>
+            <div class="filter-panel-footer">
+              <button class="btn-reset" onclick="resetFilters()">Reset</button>
+              <button class="btn-apply" onclick="applyFilters()">Apply Filters</button>
+            </div>
+          </div>
+        </div><!-- /toolbar -->
+
+        <div class="customers-meta" id="customers-meta"></div>
+
+        <!-- Customer cards -->
+        <div class="customers-grid" id="customers-grid"></div>
+
+      </section><!-- /customers-view -->
+
+    </div><!-- /content -->
+  </main><!-- /main -->
+
+  <!-- ─── CUSTOMER DETAIL PANEL ────────────────────────────────────── -->
+  <div class="detail-overlay" id="detail-overlay" onclick="closeDetailPanel()"></div>
+  <div class="detail-panel" id="detail-panel">
+    <div class="detail-panel-inner" id="detail-panel-body"></div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+  <script src="dashboard.js"></script>
+  <script src="customers.js"></script>
+
+</body>
+</html>
