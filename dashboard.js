@@ -88,6 +88,13 @@ function renderDPDBuckets() {
       <div class="progress-track">
         <div class="progress-fill" style="width:${b.slippageRisk}%;background:${b.color}"></div>
       </div>
+      <div class="slippage-header" style="margin-top:10px;">
+        <span class="slippage-label">Resolution Rate</span>
+        <span class="slippage-pct" style="color:#16A34A">${b.resolutionRate}%</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" style="width:${b.resolutionRate}%;background:#16A34A"></div>
+      </div>
     </div>
   `).join('');
 }

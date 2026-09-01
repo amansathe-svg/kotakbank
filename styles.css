@@ -751,6 +751,7 @@ body {
 .badge-dpd-30-60 { background: #FEF3C7; color: #92400E; }
 .badge-dpd-60-90 { background: #FED7AA; color: #7C2D12; }
 .badge-dpd-90-plus { background: #FEE2E2; color: #991B1B; }
+.badge-dpd-settlement { background: #EDE9FE; color: #4C1D95; }
 
 .propensity-badge {
   font-size: 11px;

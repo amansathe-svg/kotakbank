@@ -42,7 +42,7 @@ function renderCustomerCards(customers) {
 
   grid.innerHTML = customers.map(c => {
     const propClass = c.propensity.toLowerCase();
-    const dpdClass = 'badge-dpd-' + (c.dpd === '90+' ? '90-plus' : c.dpd.replace('-', '-'));
+    const dpdClass = 'badge-dpd-' + (c.dpd === '90+' ? '90-plus' : c.dpd === 'settlement' ? 'settlement' : c.dpd.replace('-', '-'));
     const scoreColor = propClass === 'green' ? 'var(--green)' : propClass === 'amber' ? 'var(--amber)' : 'var(--red-risk)';
     const ptpDotClass = c.ptpStatus === 'PTP Given' ? 'green' : c.ptpStatus === 'Broken PTP' ? 'red' : 'amber';
     const ptpText = c.ptpStatus === 'PTP Given'
@@ -66,7 +66,7 @@ function renderCustomerCards(customers) {
 
         <div class="badges-row">
           <span class="badge badge-loan">${c.loanType}</span>
-          <span class="badge ${dpdClass}">${c.dpd} DPD · ${c.dpdDays}d</span>
+          <span class="badge ${dpdClass}">${c.dpd === 'settlement' ? 'Settlement' : c.dpd + ' DPD'} · ${c.dpdDays}d</span>
         </div>
 
         <div class="score-row">
@@ -127,7 +127,7 @@ function openDetailPanel(id) {
       <div class="detail-header-badges">
         <span class="propensity-badge ${propClass}">${c.propensity} Propensity</span>
         <span class="badge badge-loan">${c.loanType}</span>
-        <span class="badge badge-dpd-${c.dpd === '90+' ? '90-plus' : c.dpd.replace('-', '-')}">${c.dpd} DPD · ${c.dpdDays} days</span>
+        <span class="badge badge-dpd-${c.dpd === '90+' ? '90-plus' : c.dpd === 'settlement' ? 'settlement' : c.dpd.replace('-', '-')}">${c.dpd === 'settlement' ? 'Settlement' : c.dpd + ' DPD'} · ${c.dpdDays} days</span>
       </div>
     </div>
 

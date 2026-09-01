@@ -1,34 +1,44 @@
 window.KPI_DATA = {
-  totalCollectionsDone: 1247,
-  totalOutstanding: '28.4',
-  avgCollectionRate: 73.2,
-  ptpSuccessRate: 68.5,
-  collectionsDoneChange: +8.3,
-  outstandingChange: -4.1,
-  collectionRateChange: +2.1,
-  ptpSuccessChange: +1.4
+  totalCollectionsDone: 1358,
+  totalOutstanding: '56.2',
+  avgCollectionRate: 71.4,
+  ptpSuccessRate: 64.8,
+  collectionsDoneChange: +6.2,
+  outstandingChange: -3.7,
+  collectionRateChange: +1.9,
+  ptpSuccessChange: +2.6
 };
 
 window.DPD_BUCKETS = [
   {
     id: 'dpd-0-30', label: '0–30 DPD', range: '0-30',
-    customers: 524, outstanding: '₹6.2 Cr', outstandingRaw: 6.2,
-    slippageRisk: 12, color: '#16A34A', bgColor: '#DCFCE7', textColor: '#166534'
+    customers: 618, outstanding: '₹11.4 Cr', outstandingRaw: 11.4,
+    slippageRisk: 12, resolutionRate: 84,
+    color: '#16A34A', bgColor: '#DCFCE7', textColor: '#166534'
   },
   {
     id: 'dpd-30-60', label: '30–60 DPD', range: '30-60',
-    customers: 318, outstanding: '₹8.7 Cr', outstandingRaw: 8.7,
-    slippageRisk: 34, color: '#D97706', bgColor: '#FEF3C7', textColor: '#92400E'
+    customers: 374, outstanding: '₹16.8 Cr', outstandingRaw: 16.8,
+    slippageRisk: 37, resolutionRate: 61,
+    color: '#D97706', bgColor: '#FEF3C7', textColor: '#92400E'
   },
   {
     id: 'dpd-60-90', label: '60–90 DPD', range: '60-90',
-    customers: 247, outstanding: '₹7.9 Cr', outstandingRaw: 7.9,
-    slippageRisk: 58, color: '#EA580C', bgColor: '#FED7AA', textColor: '#7C2D12'
+    customers: 261, outstanding: '₹14.2 Cr', outstandingRaw: 14.2,
+    slippageRisk: 59, resolutionRate: 38,
+    color: '#EA580C', bgColor: '#FED7AA', textColor: '#7C2D12'
   },
   {
     id: 'dpd-90-plus', label: '90+ DPD', range: '90+',
-    customers: 158, outstanding: '₹5.6 Cr', outstandingRaw: 5.6,
-    slippageRisk: 81, color: '#DC2626', bgColor: '#FEE2E2', textColor: '#7F1D1D'
+    customers: 173, outstanding: '₹9.6 Cr', outstandingRaw: 9.6,
+    slippageRisk: 82, resolutionRate: 17,
+    color: '#DC2626', bgColor: '#FEE2E2', textColor: '#7F1D1D'
+  },
+  {
+    id: 'dpd-settlement', label: 'Settlement', range: 'settlement',
+    customers: 62, outstanding: '₹4.2 Cr', outstandingRaw: 4.2,
+    slippageRisk: 21, resolutionRate: 38,
+    color: '#7C3AED', bgColor: '#EDE9FE', textColor: '#4C1D95'
   }
 ];
 
@@ -37,20 +47,22 @@ window.MONTHLY_LABELS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug']
 window.MONTHLY_COLLECTIONS = {
   labels: window.MONTHLY_LABELS,
   datasets: [
-    { label: '0–30 DPD', data: [210, 195, 228, 241, 219, 253, 235, 198], color: '#16A34A' },
-    { label: '30–60 DPD', data: [140, 128, 155, 168, 143, 171, 159, 132], color: '#D97706' },
-    { label: '60–90 DPD', data: [95, 87, 102, 118, 98, 124, 108, 91], color: '#EA580C' },
-    { label: '90+ DPD', data: [48, 52, 61, 55, 47, 63, 58, 42], color: '#DC2626' }
+    { label: '0–30 DPD',   data: [224, 208, 241, 258, 233, 267, 249, 214], color: '#16A34A' },
+    { label: '30–60 DPD',  data: [148, 136, 162, 176, 151, 183, 168, 141], color: '#D97706' },
+    { label: '60–90 DPD',  data: [91,  84,  99,  114,  94,  119, 104,  88], color: '#EA580C' },
+    { label: '90+ DPD',    data: [44,  48,  56,  51,   43,  58,  53,  39],  color: '#DC2626' },
+    { label: 'Settlement', data: [14,  12,  17,  15,   13,  19,  16,  14],  color: '#7C3AED' }
   ]
 };
 
 window.SLIPPAGE_TREND = {
   labels: window.MONTHLY_LABELS,
   datasets: [
-    { label: '0–30 DPD', data: [10, 11, 9, 12, 11, 13, 12, 12], color: '#16A34A' },
-    { label: '30–60 DPD', data: [28, 31, 30, 35, 33, 36, 34, 34], color: '#D97706' },
-    { label: '60–90 DPD', data: [52, 55, 54, 59, 56, 60, 58, 58], color: '#EA580C' },
-    { label: '90+ DPD', data: [75, 78, 77, 82, 80, 83, 81, 81], color: '#DC2626' }
+    { label: '0–30 DPD',   data: [10, 11,  9, 12, 11, 13, 12, 12], color: '#16A34A' },
+    { label: '30–60 DPD',  data: [29, 32, 31, 36, 34, 38, 36, 37], color: '#D97706' },
+    { label: '60–90 DPD',  data: [53, 56, 55, 60, 57, 61, 59, 59], color: '#EA580C' },
+    { label: '90+ DPD',    data: [76, 79, 78, 83, 81, 84, 82, 82], color: '#DC2626' },
+    { label: 'Settlement', data: [23, 22, 21, 25, 22, 24, 22, 21], color: '#7C3AED' }
   ]
 };
 
@@ -95,28 +107,33 @@ window.CUSTOMERS = [
     phone: '+91 87654 32109', outstandingAmount: '₹2,87,300',
     interactions: [
       {
-        date: '20 Aug 2026', channel: 'Outbound Call', agent: 'Suresh Pillai',
-        duration: '6m 15s', outcome: 'Discussed — No PTP', icon: 'phone',
-        notes: 'Customer disputes an insurance premium added to her loan account. Wants branch manager resolution before paying. Not hostile, but firm.'
+        date: '22 Aug 2026', channel: 'Outbound Call', agent: 'Suresh Pillai',
+        duration: '7m 42s', outcome: 'Medical Docs Received — Moratorium Requested', icon: 'phone',
+        notes: 'Confirmed receipt of hospital documentation. Customer submitted Apollo Hospital Pune discharge summary + itemised bills (₹1,84,000). She is requesting a 60-day moratorium under medical hardship provisions. Case escalated to credit review team. Customer was cooperative and engaged throughout.'
       },
       {
-        date: '14 Aug 2026', channel: 'Outbound Call', agent: 'Neha Sharma',
-        duration: '2m 48s', outcome: 'Partial Discussion', icon: 'phone',
-        notes: 'Customer engaged but was distracted. Said she would call back. Did not follow through.'
+        date: '15 Aug 2026', channel: 'WhatsApp', agent: 'System',
+        duration: '—', outcome: 'Hospital Documents Submitted', icon: 'chat',
+        notes: 'Customer submitted discharge summary and itemised medical bills via WhatsApp. Documents cover a cardiac procedure performed on 28 Jul 2026 at Apollo Hospital, Pune. Bills verified and forwarded to the credit review team for hardship assessment.'
+      },
+      {
+        date: '10 Aug 2026', channel: 'Outbound Call', agent: 'Neha Sharma',
+        duration: '9m 18s', outcome: 'Medical Hardship Disclosed — Cooperative', icon: 'phone',
+        notes: 'Customer disclosed hospitalisation for a cardiac procedure on 28 Jul 2026. Said she is still in recovery and managing significant medical expenses running into lakhs. Offered to submit hospital documentation and requested temporary payment relief. Tone was distressed but cooperative — no evasion.'
       },
       {
         date: '08 Aug 2026', channel: 'Email', agent: 'System',
-        duration: '—', outcome: 'Opened', icon: 'email',
-        notes: 'Default notice email sent. Customer opened the email but took no action.'
+        duration: '—', outcome: 'Opened — No Action at Time', icon: 'email',
+        notes: 'Default notice email sent. Customer opened the email but took no action — likely due to ongoing hospitalisation and recovery at the time.'
       }
     ],
-    aiSummary: 'Priya Sharma has a genuine billing dispute about an insurance premium charge on her home loan, which is her stated reason for withholding payment. She is communicative and not avoiding contact, but is firm about resolving the dispute before paying. The account needs escalation to the branch for dispute resolution before collection can succeed. There is moderate risk of further slippage if unresolved within 7–10 days.',
+    aiSummary: 'Priya Sharma\'s payment delay is directly attributable to a documented medical emergency — a cardiac procedure at Apollo Hospital, Pune on 28 July 2026. She has proactively submitted a discharge summary and itemised hospital bills totalling ₹1,84,000, demonstrating transparency and good faith. She is formally requesting a 60-day moratorium under the bank\'s medical hardship provision, and the case has been escalated to the credit review team. Her willingness to engage, submit documentation, and work through official channels indicates genuine repayment intent. Resolution is conditional on the credit team approving the moratorium. No evasion or avoidance behavior observed throughout.',
     scoreReasons: [
-      'Willing to pay but citing a billing dispute — needs internal resolution first',
-      'Engaged on calls but has not committed to a date or amount',
-      'Dispute claim adds complexity — collection depends on branch action',
-      'First notable delay in a 3-year home loan tenure',
-      'No evasion or hostility — fundamentally a cooperative customer'
+      'Documented medical emergency — cardiac procedure with verified Apollo Hospital records',
+      'Proactively submitted discharge summary and ₹1,84,000 hospital bills — high transparency',
+      'Engaging through formal channels for moratorium — structured and cooperative approach',
+      'No prior defaults in a 3-year home loan tenure before this medical event',
+      'Resolution timeline depends on internal credit team approval — moderate short-term risk'
     ]
   },
   {
