@@ -78,15 +78,14 @@ body {
   border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.sidebar-logo-img {
+.sidebar-logo-wrap {
+  display: flex;
+  align-items: center;
+}
+
+.sidebar-logo-wrap svg {
   display: block;
-  width: 100%;
-  max-width: 180px;
-  height: auto;
-  background: #ffffff;
-  border-radius: 8px;
-  padding: 8px 12px;
-  object-fit: contain;
+  max-width: 100%;
 }
 
 .sidebar-logo svg { display: block; }
