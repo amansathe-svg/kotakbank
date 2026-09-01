@@ -205,6 +205,47 @@ function openDetailPanel(id) {
       </div>
 
       <div class="detail-section">
+        <div class="detail-section-heading">Field Agent Actions</div>
+        ${(() => {
+          const fa = c.fieldAction;
+          const priorityMeta = {
+            Low:    { cls: 'fa-priority-low',    label: 'Low Priority' },
+            Medium: { cls: 'fa-priority-medium', label: 'Medium Priority' },
+            High:   { cls: 'fa-priority-high',   label: 'High Priority' },
+            Legal:  { cls: 'fa-priority-legal',  label: 'Legal Action' },
+            Hold:   { cls: 'fa-priority-hold',   label: 'On Hold' }
+          }[fa.priority] || { cls: 'fa-priority-medium', label: fa.priority };
+          const channelIcon = {
+            'Call': `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 10.5 19.79 19.79 0 0 1 1.61 2 2 2 0 0 1 3.6 0h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 7.91a16 16 0 0 0 5.47 5.47l.97-.97a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 16z"/></svg>`,
+            'WhatsApp + Call': `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>`,
+            'Field Visit': `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>`,
+            'Legal': `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>`,
+            'Internal': `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>`
+          }[fa.channel] || '';
+          return `
+          <div class="fa-card">
+            <div class="fa-top-row">
+              <span class="fa-priority-badge ${priorityMeta.cls}">${priorityMeta.label}</span>
+              <span class="fa-channel">${channelIcon} ${fa.channel}</span>
+            </div>
+            <div class="fa-action-text">${fa.action}</div>
+            <div class="fa-meta-row">
+              <div class="fa-meta-item">
+                <span class="fa-meta-label">Next Action</span>
+                <span class="fa-meta-value">${fa.nextDate}</span>
+              </div>
+              <div class="fa-meta-item">
+                <span class="fa-meta-label">Best Time</span>
+                <span class="fa-meta-value">${fa.bestTime}</span>
+              </div>
+            </div>
+            <div class="fa-script-label">Suggested Script / Approach</div>
+            <div class="fa-script-box">${fa.script}</div>
+          </div>`;
+        })()}
+      </div>
+
+      <div class="detail-section">
         <div class="detail-section-heading">Propensity Score Breakdown</div>
         <div class="score-display ${propClass}">
           <div class="score-circle ${propClass}">

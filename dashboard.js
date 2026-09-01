@@ -77,10 +77,7 @@ function renderDPDBuckets() {
       </div>
       <div class="dpd-count">${b.customers.toLocaleString('en-IN')}</div>
       <div class="dpd-count-label">Accounts</div>
-      <div class="dpd-amount">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--text-muted)"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-        ${b.outstanding} Outstanding
-      </div>
+      <div class="dpd-amount">${b.outstanding} Outstanding</div>
       <div class="slippage-header">
         <span class="slippage-label">Slippage Risk</span>
         <span class="slippage-pct" style="color:${b.color}">${b.slippageRisk}%</span>

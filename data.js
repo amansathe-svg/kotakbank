@@ -97,7 +97,15 @@ window.CUSTOMERS = [
       'First-ever delay in a 2-year loan tenure',
       'PTP date (28 Aug) aligns realistically with salary credit (25 Aug)',
       'No history of broken PTPs — high reliability score'
-    ]
+    ],
+    fieldAction: {
+      priority: 'Low',
+      channel: 'Call',
+      nextDate: '28 Aug 2026',
+      bestTime: '10:00 AM – 12:00 PM',
+      action: 'PTP follow-up — confirm ₹45,000 payment receipt on commitment date.',
+      script: 'Good morning, this is [agent] from Kotak Bank. Calling to confirm the payment of ₹45,000 you committed to today. Would you like me to send a UPI link or NEFT details? Once received we\'ll update your account immediately.'
+    }
   },
   {
     id: 2, name: 'Priya Sharma', initials: 'PS', avatarBg: '#7C3AED',
@@ -134,7 +142,15 @@ window.CUSTOMERS = [
       'Engaging through formal channels for moratorium — structured and cooperative approach',
       'No prior defaults in a 3-year home loan tenure before this medical event',
       'Resolution timeline depends on internal credit team approval — moderate short-term risk'
-    ]
+    ],
+    fieldAction: {
+      priority: 'Hold',
+      channel: 'Internal',
+      nextDate: '01 Sep 2026',
+      bestTime: '—',
+      action: 'Pause all collection outreach — moratorium request under credit team review.',
+      script: 'Do not call or message for collection until the credit review concludes. If customer calls in, inform her the moratorium request is being reviewed and she will receive a response within 3 working days. Maintain an empathetic, supportive tone given the documented medical hardship. Escalate to branch manager if review is not resolved by 1 Sep 2026.'
+    }
   },
   {
     id: 3, name: 'Amit Patel', initials: 'AP', avatarBg: '#0369A1',
@@ -171,7 +187,15 @@ window.CUSTOMERS = [
       'Self-employed income makes collection timeline less predictable',
       'One missed call-back reduces reliability score slightly',
       'Previous payments were regular before this 67-day delay'
-    ]
+    ],
+    fieldAction: {
+      priority: 'Medium',
+      channel: 'WhatsApp + Call',
+      nextDate: '03 Sep 2026',
+      bestTime: '6:00 PM – 8:00 PM',
+      action: 'Pre-PTP WhatsApp reminder on 3 Sep, follow-up call on 5 Sep to confirm payment.',
+      script: 'Send WhatsApp on 3 Sep: "Dear Amit, a friendly reminder for your payment commitment of ₹62,000 due on 5 Sep. Please ensure your account is ready. Call us if you need any assistance." Follow up with a call on 5 Sep morning. If receivables haven\'t cleared, negotiate a short 7-day extension rather than letting the account slip further.'
+    }
   },
   {
     id: 4, name: 'Sunita Verma', initials: 'SV', avatarBg: '#991B1B',
@@ -213,7 +237,15 @@ window.CUSTOMERS = [
       'Possible change of address — complicates field and legal follow-up',
       'Legal notice already served — indicates prior escalation without result',
       '112 DPD — highest risk of slipping to NPA in current portfolio'
-    ]
+    ],
+    fieldAction: {
+      priority: 'Legal',
+      channel: 'Legal',
+      nextDate: 'Immediate',
+      bestTime: '—',
+      action: 'Escalate to legal team — initiate formal attorney notice and NPA classification review.',
+      script: 'Forward complete case file to legal team with: (1) broken PTP documentation, (2) prior legal notice sent to old address, (3) field visit notes confirming suspected address change. Request attorney notice to both registered and last-known address. Simultaneously pull alternate contact numbers from KYC file and attempt via a fresh number. Do not make standard collection calls — all outreach must go through legal channel from this point.'
+    }
   },
   {
     id: 5, name: 'Mohit Singh', initials: 'MS', avatarBg: '#065F46',
@@ -245,7 +277,15 @@ window.CUSTOMERS = [
       'Salaried with traceable income — low flight risk',
       'Transparent about delay reason without being prompted',
       'PTP date (25 Aug) is imminent — very high probability of fulfillment'
-    ]
+    ],
+    fieldAction: {
+      priority: 'Low',
+      channel: 'Call',
+      nextDate: '25 Aug 2026',
+      bestTime: '9:00 AM – 11:00 AM',
+      action: 'PTP confirmation call — mark account resolved upon payment receipt.',
+      script: 'Call to confirm ₹28,500 received. If not received by 3 PM, send one WhatsApp reminder. Customer has shown exceptional intent and proactively called in — keep tone friendly and appreciative. Once payment is confirmed, send a thank-you message and note the account positively for future credit review.'
+    }
   },
   {
     id: 6, name: 'Kavitha Nair', initials: 'KN', avatarBg: '#6B21A8',
@@ -287,6 +327,14 @@ window.CUSTOMERS = [
       'No PTP given despite 78 DPD and multiple touchpoints across channels',
       'Engagement declining over time — negative behavioral trajectory',
       '₹5.18 Cr home loan at risk — property valuation and legal review recommended'
-    ]
+    ],
+    fieldAction: {
+      priority: 'High',
+      channel: 'Field Visit',
+      nextDate: '24 Aug 2026',
+      bestTime: '7:00 AM – 9:00 AM',
+      action: 'Urgent field visit — serve formal legal notice and document contact attempt.',
+      script: 'Visit early morning when customer is most likely at home. Bring two copies of the legal notice — leave one with a family member or neighbor with witness signature if she refuses again. Photograph the door and document the attempt with timestamps. Also visit the registered workplace from the KYC file. Report outcome to legal team within 24 hours. Initiate property valuation process in parallel.'
+    }
   }
 ];
