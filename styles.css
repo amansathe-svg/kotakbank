@@ -511,6 +511,89 @@ body {
   opacity: 0.85;
 }
 
+/* ─── BUCKET ANALYSIS CARD ───────────────────────────────────────── */
+
+.bucket-analysis-card {
+  margin-bottom: 18px;
+  padding: 20px 24px 24px;
+}
+
+.bucket-analysis-hdr {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.bucket-select-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.bucket-select-wrap select {
+  appearance: none;
+  -webkit-appearance: none;
+  padding: 8px 38px 8px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  background: white;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  cursor: pointer;
+  outline: none;
+  font-family: 'Inter', sans-serif;
+  transition: border-color 0.15s;
+}
+
+.bucket-select-wrap select:focus {
+  border-color: var(--kotak-blue);
+}
+
+.bucket-select-arrow {
+  position: absolute;
+  right: 11px;
+  color: #8898B8;
+  pointer-events: none;
+}
+
+.bucket-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.bucket-stat {
+  background: var(--bg-page);
+  border-radius: 10px;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+}
+
+.bucket-stat-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+}
+
+.bucket-stat-value {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--text-primary);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.bucket-stat-sub {
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
 /* ─── CHARTS COMBO GRID ──────────────────────────────────────────── */
 
 .charts-grid-combo {
@@ -521,7 +604,7 @@ body {
 }
 
 .chart-wrap-donut {
-  height: 200px !important;
+  height: 240px !important;
 }
 
 /* ─── DPD BUCKETS (legacy — kept for fallback) ───────────────────── */

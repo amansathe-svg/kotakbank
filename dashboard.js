@@ -1,9 +1,7 @@
 function initDashboard() {
   renderKPICards();
-  renderDPDBuckets();
   setTimeout(() => {
-    renderMonthlyChart();
-    renderSlippageChart();
+    renderBucketAnalysis();
     renderCaseStatusChart();
   }, 50);
 }
@@ -115,60 +113,146 @@ function renderKPICards() {
   }).join('');
 }
 
-/* ── DPD Bucket Cards ───────────────────────────────────────────── */
-function renderDPDBuckets() {
-  const grid = document.getElementById('dpd-grid');
-  if (!grid) return;
+/* ── Bucket Analysis (interactive) ─────────────────────────────── */
+const BUCKET_LABEL_MAP = {
+  '0-30': '0–30 DPD', '30-60': '30–60 DPD',
+  '60-90': '60–90 DPD', '90+': '90+ DPD', 'settlement': 'Settlement'
+};
 
-  const dsMap = {};
-  (window.MONTHLY_COLLECTIONS.datasets || []).forEach(ds => {
-    dsMap[ds.label] = ds.data;
+function renderBucketAnalysis() {
+  updateBucketView('0-30');
+}
+
+function selectBucket(key) {
+  updateBucketView(key);
+}
+
+function updateBucketView(key) {
+  const dsLabel = BUCKET_LABEL_MAP[key];
+  const bucket   = (window.DPD_BUCKETS || []).find(b => b.label === dsLabel);
+  const collDs   = (window.MONTHLY_COLLECTIONS.datasets || []).find(d => d.label === dsLabel);
+  const slipDs   = (window.SLIPPAGE_TREND.datasets || []).find(d => d.label === dsLabel);
+  if (!bucket || !collDs) return;
+
+  const riskLabel = bucket.slippageRisk <= 20 ? 'Low Risk'
+    : bucket.slippageRisk <= 45 ? 'Moderate'
+    : bucket.slippageRisk <= 65 ? 'High Risk' : 'Critical';
+
+  const statsEl = document.getElementById('bucket-stats');
+  if (statsEl) {
+    statsEl.innerHTML = `
+      <div class="bucket-stat">
+        <div class="bucket-stat-label">Active Accounts</div>
+        <div class="bucket-stat-value" style="color:${bucket.color}">${bucket.customers.toLocaleString('en-IN')}</div>
+        <div class="bucket-stat-sub">in this bucket</div>
+      </div>
+      <div class="bucket-stat">
+        <div class="bucket-stat-label">Outstanding</div>
+        <div class="bucket-stat-value">${bucket.outstanding}</div>
+        <div class="bucket-stat-sub">total exposure</div>
+      </div>
+      <div class="bucket-stat">
+        <div class="bucket-stat-label">Resolution Rate</div>
+        <div class="bucket-stat-value" style="color:#16A34A">${bucket.resolutionRate}%</div>
+        <div class="bucket-stat-sub">accounts resolved</div>
+      </div>
+      <div class="bucket-stat">
+        <div class="bucket-stat-label">Slippage Risk</div>
+        <div class="bucket-stat-value" style="color:${bucket.color}">${bucket.slippageRisk}%</div>
+        <div class="bucket-stat-sub">${riskLabel}</div>
+      </div>`;
+  }
+
+  updateBucketChart(collDs, slipDs, bucket);
+}
+
+function updateBucketChart(collDs, slipDs, bucket) {
+  const ctx = document.getElementById('bucket-chart');
+  if (!ctx) return;
+  if (window._bucketChart) window._bucketChart.destroy();
+
+  const labels = window.MONTHLY_COLLECTIONS.labels;
+  const color  = bucket.color;
+
+  window._bucketChart = new Chart(ctx, {
+    data: {
+      labels,
+      datasets: [
+        {
+          type: 'bar',
+          label: 'Accounts Resolved',
+          data: collDs.data,
+          backgroundColor: color + 'BB',
+          borderColor: color,
+          borderWidth: 1.5,
+          borderRadius: 6,
+          borderSkipped: false,
+          yAxisID: 'y'
+        },
+        {
+          type: 'line',
+          label: 'Slippage Risk %',
+          data: slipDs ? slipDs.data : [],
+          borderColor: '#DC2626',
+          backgroundColor: '#DC262610',
+          borderWidth: 2,
+          pointBackgroundColor: '#DC2626',
+          pointRadius: 3,
+          pointHoverRadius: 5,
+          tension: 0.4,
+          fill: false,
+          yAxisID: 'y2'
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: '#0F1F3D',
+          titleFont: { size: 11, family: 'Inter' },
+          bodyFont: { size: 12, family: 'Inter' },
+          padding: 10,
+          cornerRadius: 8,
+          callbacks: {
+            label: ctx => ctx.datasetIndex === 0
+              ? ` Accounts resolved: ${ctx.parsed.y}`
+              : ` Slippage risk: ${ctx.parsed.y}%`
+          }
+        }
+      },
+      scales: {
+        x: {
+          grid: { display: false },
+          border: { display: false },
+          ticks: { font: { size: 11, family: 'Inter' }, color: '#8898B8' }
+        },
+        y: {
+          position: 'left',
+          grid: { color: '#EBF2FF', lineWidth: 1 },
+          border: { display: false },
+          ticks: { font: { size: 11, family: 'Inter' }, color: '#8898B8', maxTicksLimit: 5 },
+          title: { display: true, text: 'Accounts resolved', font: { size: 10, family: 'Inter' }, color: '#8898B8' }
+        },
+        y2: {
+          position: 'right',
+          min: 0, max: 100,
+          grid: { display: false },
+          border: { display: false },
+          ticks: {
+            font: { size: 11, family: 'Inter' },
+            color: '#DC2626',
+            maxTicksLimit: 5,
+            callback: v => v + '%'
+          },
+          title: { display: true, text: 'Slippage risk', font: { size: 10, family: 'Inter' }, color: '#DC2626' }
+        }
+      }
+    }
   });
-
-  const bucketLabelMap = {
-    '0-30': '0–30 DPD', '30-60': '30–60 DPD',
-    '60-90': '60–90 DPD', '90+': '90+ DPD', 'settlement': 'Settlement'
-  };
-
-  grid.innerHTML = window.DPD_BUCKETS.map(b => {
-    const sparkData = dsMap[b.label] || [];
-    const spark = sparkData.length ? makeSpark(sparkData, b.color, 220, 44) : '';
-
-    const riskLevel = b.slippageRisk <= 20 ? 'Low Risk'
-      : b.slippageRisk <= 45 ? 'Moderate Risk'
-      : b.slippageRisk <= 65 ? 'High Risk' : 'Critical';
-
-    return `
-    <div class="card dpd-card-v2">
-      <div class="dpd2-header" style="border-color:${b.color}">
-        <div class="dpd2-label-row">
-          <span class="dpd2-label">${b.label}</span>
-          <span class="dpd2-risk-pill" style="background:${b.color}18;color:${b.color}">
-            <span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:${b.color};margin-right:5px;vertical-align:middle;"></span>${riskLevel}
-          </span>
-        </div>
-        <div class="dpd2-count">${b.customers.toLocaleString('en-IN')}</div>
-        <div class="dpd2-count-label">Active Accounts</div>
-      </div>
-
-      <div class="dpd2-chips">
-        <div class="dpd2-chip">
-          <div class="dpd2-chip-label">Outstanding</div>
-          <div class="dpd2-chip-value">${b.outstanding}</div>
-        </div>
-        <div class="dpd2-chip">
-          <div class="dpd2-chip-label">Resolution</div>
-          <div class="dpd2-chip-value" style="color:#16A34A">${b.resolutionRate}%</div>
-        </div>
-        <div class="dpd2-chip">
-          <div class="dpd2-chip-label">Slippage</div>
-          <div class="dpd2-chip-value" style="color:${b.color}">${b.slippageRisk}%</div>
-        </div>
-      </div>
-
-      <div class="dpd2-spark">${spark}</div>
-    </div>`;
-  }).join('');
 }
 
 /* ── Case Status Donut ──────────────────────────────────────────── */
@@ -227,112 +311,3 @@ function renderCaseStatusChart() {
   });
 }
 
-/* ── Monthly Collections Bar ────────────────────────────────────── */
-function renderMonthlyChart() {
-  const ctx = document.getElementById('monthly-chart');
-  if (!ctx) return;
-  const data = window.MONTHLY_COLLECTIONS;
-  if (window._monthlyChart) window._monthlyChart.destroy();
-  window._monthlyChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: data.labels,
-      datasets: data.datasets.map(ds => ({
-        label: ds.label,
-        data: ds.data,
-        backgroundColor: ds.color + 'CC',
-        borderColor: ds.color,
-        borderWidth: 1.5,
-        borderRadius: 4,
-        borderSkipped: false
-      }))
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: { display: false },
-        tooltip: {
-          backgroundColor: '#0F1F3D',
-          titleFont: { size: 11, family: 'Inter' },
-          bodyFont: { size: 12, family: 'Inter' },
-          padding: 10,
-          cornerRadius: 8,
-          callbacks: { label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.y} accounts` }
-        }
-      },
-      scales: {
-        x: {
-          stacked: false,
-          grid: { display: false },
-          border: { display: false },
-          ticks: { font: { size: 11, family: 'Inter' }, color: '#8898B8' }
-        },
-        y: {
-          grid: { color: '#EBF2FF', lineWidth: 1 },
-          border: { display: false, dash: [4, 4] },
-          ticks: { font: { size: 11, family: 'Inter' }, color: '#8898B8', maxTicksLimit: 5 }
-        }
-      }
-    }
-  });
-}
-
-/* ── Slippage Trend Line ────────────────────────────────────────── */
-function renderSlippageChart() {
-  const ctx = document.getElementById('slippage-chart');
-  if (!ctx) return;
-  const data = window.SLIPPAGE_TREND;
-  if (window._slippageChart) window._slippageChart.destroy();
-  window._slippageChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: data.labels,
-      datasets: data.datasets.map(ds => ({
-        label: ds.label,
-        data: ds.data,
-        borderColor: ds.color,
-        backgroundColor: ds.color + '15',
-        borderWidth: 2,
-        pointBackgroundColor: ds.color,
-        pointRadius: 3,
-        pointHoverRadius: 5,
-        tension: 0.4,
-        fill: false
-      }))
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: { display: false },
-        tooltip: {
-          backgroundColor: '#0F1F3D',
-          titleFont: { size: 11, family: 'Inter' },
-          bodyFont: { size: 12, family: 'Inter' },
-          padding: 10,
-          cornerRadius: 8,
-          callbacks: { label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.y}%` }
-        }
-      },
-      scales: {
-        x: {
-          grid: { display: false },
-          border: { display: false },
-          ticks: { font: { size: 11, family: 'Inter' }, color: '#8898B8' }
-        },
-        y: {
-          min: 0, max: 100,
-          grid: { color: '#EBF2FF', lineWidth: 1 },
-          border: { display: false, dash: [4, 4] },
-          ticks: {
-            font: { size: 11, family: 'Inter' },
-            color: '#8898B8',
-            maxTicksLimit: 5,
-            callback: v => v + '%'
-          }
-        }
-      }
-    }
-  });
-}

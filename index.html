@@ -109,68 +109,40 @@
         <!-- KPI Cards -->
         <div class="kpi-grid" id="kpi-grid"></div>
 
-        <!-- DPD Buckets -->
-        <div class="section-header-row">
-          <div class="section-title">DPD Bucket Breakdown</div>
-          <div class="section-hint">Resolution rate · Slippage risk · Monthly trend per bucket</div>
+        <!-- Bucket Analysis -->
+        <div class="card bucket-analysis-card">
+          <div class="bucket-analysis-hdr">
+            <div>
+              <div class="chart-card-title">Bucket Analysis</div>
+              <div class="chart-card-sub">Monthly collections &amp; slippage risk · Jan–Aug 2026</div>
+            </div>
+            <div class="bucket-select-wrap">
+              <svg class="bucket-select-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+              <select id="bucket-select" onchange="selectBucket(this.value)">
+                <option value="0-30">0–30 DPD</option>
+                <option value="30-60">30–60 DPD</option>
+                <option value="60-90">60–90 DPD</option>
+                <option value="90+">90+ DPD</option>
+                <option value="settlement">Settlement</option>
+              </select>
+            </div>
+          </div>
+          <div id="bucket-stats" class="bucket-stats"></div>
+          <div class="chart-wrap" style="height:260px">
+            <canvas id="bucket-chart"></canvas>
+          </div>
         </div>
-        <div class="dpd-grid-v2" id="dpd-grid"></div>
 
-        <!-- Charts Row 1: Case Status + Monthly Collections -->
-        <div class="charts-grid-combo">
-
-          <!-- Case Status Donut -->
-          <div class="card chart-card">
-            <div class="chart-card-header">
-              <div>
-                <div class="chart-card-title">Case Status</div>
-                <div class="chart-card-sub">Portfolio breakdown · Aug 2026</div>
-              </div>
-            </div>
-            <div class="chart-wrap chart-wrap-donut">
-              <canvas id="case-status-chart"></canvas>
-            </div>
-          </div>
-
-          <!-- Monthly Collections Chart -->
-          <div class="card chart-card">
-            <div class="chart-card-header">
-              <div>
-                <div class="chart-card-title">Monthly Collections by DPD Bucket</div>
-                <div class="chart-card-sub">Accounts resolved per month · Jan–Aug 2026</div>
-              </div>
-              <div class="chart-legend">
-                <div class="legend-item"><div class="legend-dot" style="background:#16A34A"></div>0–30</div>
-                <div class="legend-item"><div class="legend-dot" style="background:#D97706"></div>30–60</div>
-                <div class="legend-item"><div class="legend-dot" style="background:#EA580C"></div>60–90</div>
-                <div class="legend-item"><div class="legend-dot" style="background:#DC2626"></div>90+</div>
-                <div class="legend-item"><div class="legend-dot" style="background:#7C3AED"></div>Settlement</div>
-              </div>
-            </div>
-            <div class="chart-wrap">
-              <canvas id="monthly-chart"></canvas>
-            </div>
-          </div>
-
-        </div><!-- /charts-grid-combo -->
-
-        <!-- Charts Row 2: Slippage Trend full width -->
+        <!-- Case Status Donut -->
         <div class="card chart-card">
           <div class="chart-card-header">
             <div>
-              <div class="chart-card-title">Slippage Risk Trend</div>
-              <div class="chart-card-sub">% probability per bucket · Jan–Aug 2026</div>
-            </div>
-            <div class="chart-legend">
-              <div class="legend-item"><div class="legend-dot" style="background:#16A34A;border-radius:50%"></div>0–30 DPD</div>
-              <div class="legend-item"><div class="legend-dot" style="background:#D97706;border-radius:50%"></div>30–60</div>
-              <div class="legend-item"><div class="legend-dot" style="background:#EA580C;border-radius:50%"></div>60–90</div>
-              <div class="legend-item"><div class="legend-dot" style="background:#DC2626;border-radius:50%"></div>90+</div>
-              <div class="legend-item"><div class="legend-dot" style="background:#7C3AED;border-radius:50%"></div>Settlement</div>
+              <div class="chart-card-title">Case Status</div>
+              <div class="chart-card-sub">Portfolio breakdown · Aug 2026</div>
             </div>
           </div>
-          <div class="chart-wrap">
-            <canvas id="slippage-chart"></canvas>
+          <div class="chart-wrap chart-wrap-donut">
+            <canvas id="case-status-chart"></canvas>
           </div>
         </div>
 
