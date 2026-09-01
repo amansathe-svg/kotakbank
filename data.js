@@ -1,3 +1,18 @@
+/* Monthly sparkline trends for KPI cards (Jan–Aug 2026) */
+window.KPI_TRENDS = {
+  collections:    [521, 488, 575, 614, 534, 646, 590, 496],
+  outstanding:    [62.8, 61.4, 59.7, 58.9, 59.3, 58.1, 57.4, 56.2],
+  collectionRate: [68.2, 69.1, 70.4, 71.8, 70.9, 72.1, 71.7, 71.4],
+  ptpSuccess:     [59.2, 60.4, 62.1, 64.8, 63.2, 65.9, 64.1, 64.8]
+};
+
+/* Case status breakdown for donut chart */
+window.CASE_STATUS = {
+  labels: ['Resolved / Paid', 'PTP Committed', 'Under Discussion', 'NPA Risk'],
+  data:   [41, 24, 19, 16],
+  colors: ['#16A34A', '#2563EB', '#D97706', '#DC2626']
+};
+
 window.KPI_DATA = {
   totalCollectionsDone: 1358,
   totalOutstanding: '56.2',

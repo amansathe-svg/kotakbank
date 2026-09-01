@@ -110,14 +110,27 @@
         <div class="kpi-grid" id="kpi-grid"></div>
 
         <!-- DPD Buckets -->
-        <div style="margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;">
-          <div style="font-size:14px;font-weight:700;color:var(--text-primary)">DPD Bucket Breakdown</div>
-          <div style="font-size:12px;color:var(--text-muted)">Slippage risk = probability of DPD deterioration · Resolution rate = accounts resolved this month</div>
+        <div class="section-header-row">
+          <div class="section-title">DPD Bucket Breakdown</div>
+          <div class="section-hint">Resolution rate · Slippage risk · Monthly trend per bucket</div>
         </div>
-        <div class="dpd-grid" id="dpd-grid"></div>
+        <div class="dpd-grid-v2" id="dpd-grid"></div>
 
-        <!-- Charts -->
-        <div class="charts-grid">
+        <!-- Charts Row 1: Case Status + Monthly Collections -->
+        <div class="charts-grid-combo">
+
+          <!-- Case Status Donut -->
+          <div class="card chart-card">
+            <div class="chart-card-header">
+              <div>
+                <div class="chart-card-title">Case Status</div>
+                <div class="chart-card-sub">Portfolio breakdown · Aug 2026</div>
+              </div>
+            </div>
+            <div class="chart-wrap chart-wrap-donut">
+              <canvas id="case-status-chart"></canvas>
+            </div>
+          </div>
 
           <!-- Monthly Collections Chart -->
           <div class="card chart-card">
@@ -139,27 +152,27 @@
             </div>
           </div>
 
-          <!-- Slippage Trend Chart -->
-          <div class="card chart-card">
-            <div class="chart-card-header">
-              <div>
-                <div class="chart-card-title">Slippage Risk Trend</div>
-                <div class="chart-card-sub">% probability per bucket · Jan–Aug 2026</div>
-              </div>
+        </div><!-- /charts-grid-combo -->
+
+        <!-- Charts Row 2: Slippage Trend full width -->
+        <div class="card chart-card">
+          <div class="chart-card-header">
+            <div>
+              <div class="chart-card-title">Slippage Risk Trend</div>
+              <div class="chart-card-sub">% probability per bucket · Jan–Aug 2026</div>
             </div>
-            <div class="chart-legend" style="margin-bottom:16px;">
+            <div class="chart-legend">
               <div class="legend-item"><div class="legend-dot" style="background:#16A34A;border-radius:50%"></div>0–30 DPD</div>
               <div class="legend-item"><div class="legend-dot" style="background:#D97706;border-radius:50%"></div>30–60</div>
               <div class="legend-item"><div class="legend-dot" style="background:#EA580C;border-radius:50%"></div>60–90</div>
               <div class="legend-item"><div class="legend-dot" style="background:#DC2626;border-radius:50%"></div>90+</div>
               <div class="legend-item"><div class="legend-dot" style="background:#7C3AED;border-radius:50%"></div>Settlement</div>
             </div>
-            <div class="chart-wrap">
-              <canvas id="slippage-chart"></canvas>
-            </div>
           </div>
-
-        </div><!-- /charts-grid -->
+          <div class="chart-wrap">
+            <canvas id="slippage-chart"></canvas>
+          </div>
+        </div>
 
       </section><!-- /dashboard-view -->
 
