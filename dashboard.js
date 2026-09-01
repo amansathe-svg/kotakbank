@@ -2,7 +2,6 @@ function initDashboard() {
   renderKPICards();
   setTimeout(() => {
     renderBucketAnalysis();
-    renderCaseStatusChart();
   }, 50);
 }
 
